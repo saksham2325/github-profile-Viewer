@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import {APP_URL} from "./urls/url";
+import GithubProfileViewer from './components/GithubProfileViewer'
+import Login from './components/login';
+import MyProfile from './components/MyProfile';
+import Navbar from './components/navbar'
+
+
+class App extends React.Component {
+  render() {
+    return (
+      <div className="profile-page">
+        <BrowserRouter>
+        <Navbar/>
+        <Switch>
+          <Route path={APP_URL.HOME}><Login/></Route>
+          <Route path={APP_URL.PROFILE_VIEWER}><GithubProfileViewer/></Route>
+          <Route path={APP_URL.MY_PROFILE}><MyProfile/></Route>
+        </Switch>  
+        </BrowserRouter>
+      </div>
+    );
+  }
 }
 
 export default App;
