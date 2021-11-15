@@ -1,40 +1,37 @@
 import React from "react";
 
-import SocialCard from './SocialCard';
-import SearchBar from './SearchBar';
+import { GithubProfileViewerState } from "constants/typesdefine/interfaces";
+import SearchBar from "components/SearchBar";
+import SocialCard from "components/SocialCard";
 
+let searchSubmit: boolean = false;
 
-interface State {
-    userName: string;
-}
+class GithubProfileViewer extends React.Component<
+  {},
+  GithubProfileViewerState
+> {
+  constructor(props: {}) {
+    super(props);
 
-class GithubProfileViewer extends React.Component<{},State> {
+    this.state = {
+      username: "",
+    };
+  }
 
-    constructor(props: {}) {
-        super(props);
+  onSearchSubmit = (val: string) => {
+    searchSubmit = true;
+    this.setState({ username: val });
+  };
 
-        this.state = {
-            userName: "",
-        };
-    }
-
-    onSearchSubmit = (val: string) => {
-        console.log("saksham");
-        this.setState({ userName : val });
-        // console.log(this.state.userName);
-    }
-
-    render() {
-        return (
-            <div>
-                <SearchBar onSearchSubmit={this.onSearchSubmit}/>
-                {
-                // this.state.userName && 
-                <SocialCard username={this.state.userName}/>
-                }
-            </div>
-        );
-    }
+  render() {
+    const { username } = this.state;
+    return (
+      <div>
+        <SearchBar onSearchSubmit={this.onSearchSubmit} />
+        {searchSubmit && <SocialCard username={username} />}
+      </div>
+    );
+  }
 }
 
 export default GithubProfileViewer;

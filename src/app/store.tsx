@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import authReducer from '../slices/AuthSlice';
-import errorReducer from '../slices/ErrorSlice';
+import authReducer from 'slices/AuthSlice';
+import errorReducer from 'slices/ErrorSlice';
 
 
 export default configureStore({
@@ -9,4 +9,4 @@ export default configureStore({
     auth: authReducer,
     error: errorReducer,
   }
-})
+});

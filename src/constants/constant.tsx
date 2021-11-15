@@ -1,0 +1,5 @@
+export const ERRORS = {
+  USER_NOT_FOUND: 404,
+  INVALID_CREDENTIAL: 401,
+  NOT_AVAILABLE: "N/A",
+};

@@ -1,29 +1,54 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { useEffect } from "react";
 
-import './App.css';
-import {APP_URL} from "./urls/url";
-import GithubProfileViewer from './components/GithubProfileViewer'
-import Login from './components/login';
-import MyProfile from './components/MyProfile';
-import Navbar from './components/navbar'
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { APP_URL } from "constants/urls/url";
+import "App.css";
+import GithubProfileViewer from "components/GithubProfileViewer";
+import Login from "components/Login";
+import { LoginUser, selectUser } from "slices/AuthSlice";
+import MyProfile from "components/MyProfile";
+import NavBar from "components/Navbar";
+import Suggestions from "components/Suggestions";
 
 
-class App extends React.Component {
-  render() {
-    return (
-      <div className="profile-page">
-        <BrowserRouter>
-        <Navbar/>
+const App = () => {
+
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!user) {
+      const username = localStorage.getItem("username");
+      const password = localStorage.getItem("password");
+      if (username && password) {
+       dispatch(LoginUser (username,password));
+      }
+    }
+  }, []);
+
+  return (
+    <div className="profile-page">
+      <BrowserRouter>
+        <NavBar />
         <Switch>
-          <Route path={APP_URL.HOME}><Login/></Route>
-          <Route path={APP_URL.PROFILE_VIEWER}><GithubProfileViewer/></Route>
-          <Route path={APP_URL.MY_PROFILE}><MyProfile/></Route>
-        </Switch>  
-        </BrowserRouter>
-      </div>
-    );
-  }
-}
+          <Route path={APP_URL.HOME}>
+            <Login />
+          </Route>
+          <Route path={APP_URL.PROFILE_VIEWER}>
+            <GithubProfileViewer />
+          </Route>
+          <Route path={APP_URL.MY_PROFILE}>
+            <MyProfile />
+          </Route>
+          <Route path={APP_URL.SUGGESTIONS}>
+            <Suggestions />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </div>
+  );
+};
 
 export default App;
