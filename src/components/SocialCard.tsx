@@ -35,36 +35,38 @@ class SocialCard extends React.Component<SocialCardProps, SocialCardState> {
     };
   }
 
+  
+
   setUserDetail = async () => {
     const { username, dispatch } = this.props;
     try {
       dispatch(removeProfileError());
       const data = await ProfileService(this.props.username);
-    //   const {
-    //     login,
-    //     avatar_url,
-    //     location,
-    //     bio,
-    //     html_url,
-    //     blog,
-    //     email,
-    //     following,
-    //     followers,
-    //   } = data;
-    //   this.setState({
-    //     loading: false,
-    //     data: {
-    //       username: login,
-    //       avatar: avatar_url,
-    //       location: location,
-    //       bio: bio,
-    //       githubUrl: html_url,
-    //       blog: blog,
-    //       email: email,
-    //       following: following,
-    //       followers: followers,
-    //     },
-    //   });
+      const {
+        login,
+        avatar_url,
+        location,
+        bio,
+        html_url,
+        blog,
+        email,
+        following,
+        followers,
+      } = data;
+      this.setState({
+        loading: false,
+        data: {
+          username: login,
+          avatar: avatar_url,
+          location: location,
+          bio: bio,
+          githubUrl: html_url,
+          blog: blog,
+          email: email,
+          following: following,
+          followers: followers,
+        },
+      });
     } catch (event: any) {
       dispatch(setProfileError(event.message));
       this.setState({ loading: false });
